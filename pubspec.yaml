@@ -1,8 +1,8 @@
 name: p5
 description: A Dart implementation of the Processing API for Flutter.
-version: 0.0.2
+version: 0.0.3
 author: Andres Colubri <contact@andrescolubri.net>
-homepage: http://github.com/codeanticode
+homepage: https://github.com/codeanticode/p5.dart
 
 dependencies:
   flutter:

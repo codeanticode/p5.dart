@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import "dart:math";
 import "dart:ui";
+import "dart:typed_data";
 
 class PWidget extends StatelessWidget {
   PPainter painter;
@@ -81,9 +82,23 @@ class PAnimator extends AnimationController {
   }
 }
 
-class PPainter extends ChangeNotifier implements CustomPainter {
+class PConstants {
+  static int OPEN  = 0;
   static int CLOSE = 1;
 
+  static int LINES   = 1;
+  static int POINTS  = 2;
+  static int POLYGON = 3;
+
+  static final int SQUARE   = 1 << 0; // called 'butt' in the svg spec
+  static final int ROUND    = 1 << 1;
+  static final int PROJECT  = 1 << 2;  // called 'square' in the svg spec
+
+  static final int MITER    = 1 << 3;
+  static final int BEVEL    = 1 << 5;
+}
+
+class PPainter extends ChangeNotifier implements CustomPainter {
   bool fillParent = false;
   int width = 100;
   int height = 100;
@@ -104,8 +119,9 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   bool useFill = true;
   bool useStroke = true;
 
-  var vertices = List<Point<num>>();
+  var vertices = List<double>();
   Path path = new Path();
+  var shapeMode = PConstants.POLYGON;
 
   PPainter() {
     init();
@@ -162,6 +178,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
     strokePaint.style = PaintingStyle.stroke;
     strokePaint.color = Colors.black;
+    strokePaint.strokeCap = StrokeCap.butt;
     strokePaint.strokeJoin = StrokeJoin.bevel;
   }
 
@@ -259,12 +276,28 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     strokePaint.strokeWidth = weight.toDouble();
   }
 
-  void strokeCap(StrokeCap cap) {
-    strokePaint.strokeCap = cap;
+  void strokeCap(int cap) {
+    if (cap == PConstants.SQUARE) {
+      strokePaint.strokeCap = StrokeCap.butt;
+    }
+    if (cap == PConstants.ROUND) {
+      strokePaint.strokeCap = StrokeCap.round;
+    }
+    if (cap == PConstants.PROJECT) {
+      strokePaint.strokeCap = StrokeCap.square;
+    }
   }
 
   void strokeJoin(StrokeJoin join) {
-    strokePaint.strokeJoin = join;
+    if (join == PConstants.BEVEL) {
+      strokePaint.strokeJoin = StrokeJoin.bevel;
+    }
+    if (join == PConstants.MITER) {
+      strokePaint.strokeJoin = StrokeJoin.miter;
+    }
+    if (join == PConstants.ROUND) {
+      strokePaint.strokeJoin = StrokeJoin.round;
+    }
   }
 
   void noStroke() {
@@ -309,11 +342,11 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     vertex(x2, y2);
     vertex(x3, y3);
     vertex(x4, y4);
-    endShape(CLOSE);
+    endShape(PConstants.CLOSE);
   }
 
   void rect(num x, num y, num w, num h) {
-    final rect = new Offset(x, y) & new Size(w, h);
+    final rect = new Offset(x.toDouble(), y.toDouble()) & new Size(w.toDouble(), h.toDouble());
     if (useFill) {
       paintCanvas.drawRect(rect, fillPaint);
     }
@@ -330,15 +363,19 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     endShape();
   }
 
-  void beginShape() {
+  void beginShape([int mode = 3]) {
+    shapeMode = mode;
     vertices.clear();
   }
 
   void vertex(num x, num y) {
-    vertices.add(new Point(x, y));
+//    vertices.add(new Point(x, y));
+    vertices.add(x.toDouble());
+    vertices.add(y.toDouble());
   }
 
   void endShape([int mode = 0]) {
+    /*
     if (0 < vertices.length) {
       path.reset();
       Point<num> p0 = vertices[0];
@@ -351,10 +388,63 @@ class PPainter extends ChangeNotifier implements CustomPainter {
       if (useFill) {
         paintCanvas.drawPath(path, fillPaint);
       }
-      if (useStroke) {
+     if (useStroke) {
         paintCanvas.drawPath(path, strokePaint);
       }
     }
+    */
+
+
+    if (mode == PConstants.CLOSE && 1 < vertices.length) {
+      double x0 = vertices[0];
+      double y0 = vertices[1];
+      vertices.add(x0);
+      vertices.add(y0);
+    }
+    var verts = Float32List.fromList(vertices);
+    PointMode pmode = PointMode.polygon;
+    if (shapeMode == PConstants.POINTS) {
+      pmode = PointMode.points;
+    }
+    if (shapeMode == PConstants.LINES) {
+      pmode = PointMode.lines;
+    }
+
+    if (useFill) {
+      paintCanvas.drawRawPoints(pmode, verts, fillPaint);
+    }
+    if (useStroke) {
+      paintCanvas.drawRawPoints(pmode, verts, strokePaint);
+    }
+
+  }
+
+  void translate(num tx, num ty) {
+    paintCanvas.translate(tx.toDouble(), ty.toDouble());
+  }
+
+  void rotate(num angle) {
+    paintCanvas.rotate(angle.toDouble());
+  }
+
+  void scale(num sx, num sy) {
+    paintCanvas.scale(sx.toDouble(), sy.toDouble());
+  }
+
+  void push() {
+    paintCanvas.save();
+  }
+
+  num radians(num angle) {
+    return (angle / 180) * pi;
+  }
+
+  num degrees(num angle) {
+    return (angle / pi) * 180;
+  }
+
+  void pop() {
+    paintCanvas.restore();
   }
 
   void mousePressed() { }

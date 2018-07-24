@@ -1,3 +1,7 @@
+## [0.0.4] - July 24, 2018.
+
+* Correctly implemented polygon rendering using Path.drawPolygon()
+
 ## [0.0.3] - July 21, 2018.
 
 * Implemented translate, rotate, scale, push, and pop

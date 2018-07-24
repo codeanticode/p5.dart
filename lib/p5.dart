@@ -119,7 +119,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   bool useFill = true;
   bool useStroke = true;
 
-  var vertices = List<double>();
+  var vertices = List<Offset>();
   Path path = new Path();
   var shapeMode = PConstants.POLYGON;
 
@@ -369,54 +369,31 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void vertex(num x, num y) {
-//    vertices.add(new Point(x, y));
-    vertices.add(x.toDouble());
-    vertices.add(y.toDouble());
+    vertices.add(Offset(x.toDouble(), y.toDouble()));
   }
 
   void endShape([int mode = 0]) {
-    /*
     if (0 < vertices.length) {
-      path.reset();
-      Point<num> p0 = vertices[0];
-      path.moveTo(p0.x.toDouble(), p0.y.toDouble());
-      for (var p in vertices) {
-        path.lineTo(p.x.toDouble(), p.y.toDouble());
-        path.moveTo(p.x.toDouble(), p.y.toDouble());
+      if (shapeMode == PConstants.POINTS || shapeMode == PConstants.LINES) {
+        var vlist = List<double>();
+        for (var v in vertices) { vlist.add(v.dx); vlist.add(v.dy); }
+        var raw = Float32List.fromList(vlist);
+        if (shapeMode == PConstants.POINTS) {
+          paintCanvas.drawRawPoints(PointMode.points, raw, strokePaint);
+        } else {
+          paintCanvas.drawRawPoints(PointMode.lines, raw, strokePaint);
+        }
+      } else {
+        path.reset();
+        path.addPolygon(vertices, mode == PConstants.CLOSE);
+        if (useFill) {
+          paintCanvas.drawPath(path, fillPaint);
+        }
+        if (useStroke) {
+          paintCanvas.drawPath(path, strokePaint);
+        }
       }
-      if (mode == CLOSE) path.close();
-      if (useFill) {
-        paintCanvas.drawPath(path, fillPaint);
-      }
-     if (useStroke) {
-        paintCanvas.drawPath(path, strokePaint);
-      }
     }
-    */
-
-
-    if (mode == PConstants.CLOSE && 1 < vertices.length) {
-      double x0 = vertices[0];
-      double y0 = vertices[1];
-      vertices.add(x0);
-      vertices.add(y0);
-    }
-    var verts = Float32List.fromList(vertices);
-    PointMode pmode = PointMode.polygon;
-    if (shapeMode == PConstants.POINTS) {
-      pmode = PointMode.points;
-    }
-    if (shapeMode == PConstants.LINES) {
-      pmode = PointMode.lines;
-    }
-
-    if (useFill) {
-      paintCanvas.drawRawPoints(pmode, verts, fillPaint);
-    }
-    if (useStroke) {
-      paintCanvas.drawRawPoints(pmode, verts, strokePaint);
-    }
-
   }
 
   void translate(num tx, num ty) {

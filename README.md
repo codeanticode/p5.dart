@@ -2,6 +2,8 @@
 
 A Dart implementation of the [Processing API](https://processing.org/reference/) for [Flutter](https://flutter.io/). Processing is a software sketchbook and a language for learning how to code within the context of the visual arts.
 
+**Note:** this is an experimental library that only implements a few functions from the Processing API. Class names and structure will likely change in the future. And feel free to fork and play around with the code :-)
+
 ## Getting Started
 
 Add the p5 package to your Flutter app. For help using packages, see Flutter's online [documentation](https://flutter.io/using-packages/).
@@ -75,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
 ```
 
-The MySketch class has to extend the base PPainter clas in the p5 package, and implement the setup() and draw() functions:
+The MySketch class has to extend the base PPainter class in the p5 package, and implement the setup() and draw() functions, just like in Processing sketch:
 
 ```dart
 class MySketch extends PPainter {

@@ -24,6 +24,29 @@ class PVector {
   }
 
   /**
+   * ( begin auto-generated from PVector_sub.xml )
+   *
+   * Subtracts x, y, and z components from a vector, subtracts one vector
+   * from another, or subtracts two independent vectors. The version of the
+   * method that subtracts two vectors is a static method and returns a
+   * PVector, the others have no return value -- they act directly on the
+   * vector. See the examples for more context.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @param v any variable of type PVector
+   * @brief Subtract x, y, and z components from a vector, one vector from another, or two independent vectors
+   */
+  PVector sub(PVector v) {
+    x -= v.x;
+    y -= v.y;
+    z -= v.z;
+    return this;
+  }
+
+  /**
    * Subtract one vector from another
    * @param v1 the x, y, and z components of a PVector object
    * @param v2 the x, y, and z components of a PVector object

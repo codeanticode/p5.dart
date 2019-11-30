@@ -25,36 +25,35 @@ class PWidget extends StatelessWidget {
       margin: const EdgeInsets.all(0.0),
       child: new ClipRect(
           child: new CustomPaint(
-            painter: painter,
-            child: new GestureDetector(
-              // The gesture detector needs to be declared here so it can
-              // access the context from the CustomPaint, which allows to
-              // transforms global positions into local positions relative
-              // to the widget.
-              onTapDown: (details) {
-                painter.onTapDown(context, details);
-              },
-              onPanStart: (details) {
-                painter.onDragStart(context, details);
-              },
-              onPanUpdate: (details) {
-                painter.onDragUpdate(context, details);
-              },
-              onTapUp: (details) {
-                painter.onTapUp(context, details);
-              },
+        painter: painter,
+        child: new GestureDetector(
+          // The gesture detector needs to be declared here so it can
+          // access the context from the CustomPaint, which allows to
+          // transforms global positions into local positions relative
+          // to the widget.
+          onTapDown: (details) {
+            painter.onTapDown(context, details);
+          },
+          onPanStart: (details) {
+            painter.onDragStart(context, details);
+          },
+          onPanUpdate: (details) {
+            painter.onDragUpdate(context, details);
+          },
+          onTapUp: (details) {
+            painter.onTapUp(context, details);
+          },
 //              onTapCancel: (details) {
 //
 //              },
 //              onPanCancel: (details) {
 //
 //              },
-              onPanEnd: (details) {
-                painter.onDragEnd(context, details);
-              },
-            ),
-          )
-      ),
+          onPanEnd: (details) {
+            painter.onDragEnd(context, details);
+          },
+        ),
+      )),
     );
   }
 }
@@ -65,8 +64,9 @@ class PWidget extends StatelessWidget {
 // https://raw.githubusercontent.com/flutter/website/master/_includes/code/animation/animate1/main.dart
 // https://raw.githubusercontent.com/flutter/website/master/_includes/code/animation/animate3/main.dart
 class PAnimator extends AnimationController {
-  PAnimator(TickerProvider v) :
-        super.unbounded(duration: const Duration(milliseconds: 2000), vsync: v) {
+  PAnimator(TickerProvider v)
+      : super.unbounded(
+            duration: const Duration(milliseconds: 2000), vsync: v) {
     addStatusListener((status) {
       // Loop animation by reversing/forward when status changes.
       if (status == AnimationStatus.completed) {
@@ -83,19 +83,19 @@ class PAnimator extends AnimationController {
 }
 
 class PConstants {
-  static int OPEN  = 0;
+  static int OPEN = 0;
   static int CLOSE = 1;
 
-  static int LINES   = 1;
-  static int POINTS  = 2;
+  static int LINES = 1;
+  static int POINTS = 2;
   static int POLYGON = 3;
 
-  static final int SQUARE   = 1 << 0; // called 'butt' in the svg spec
-  static final int ROUND    = 1 << 1;
-  static final int PROJECT  = 1 << 2;  // called 'square' in the svg spec
+  static final int SQUARE = 1 << 0; // called 'butt' in the svg spec
+  static final int ROUND = 1 << 1;
+  static final int PROJECT = 1 << 2; // called 'square' in the svg spec
 
-  static final int MITER    = 1 << 3;
-  static final int BEVEL    = 1 << 5;
+  static final int MITER = 1 << 3;
+  static final int BEVEL = 1 << 5;
 }
 
 class PPainter extends ChangeNotifier implements CustomPainter {
@@ -247,19 +247,17 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     height = h;
   }
 
-  void setup() {
-  }
+  void setup() {}
 
-  void draw() {
-  }
+  void draw() {}
 
   void redraw() {
     frameCount++;
     notifyListeners();
   }
 
-  Color color(num r, num g, num b, [num a=255]) {
-    return Color.fromRGBO(r, g, b, a/255);
+  Color color(num r, num g, num b, [num a = 255]) {
+    return Color.fromRGBO(r, g, b, a / 255);
   }
 
   void background(Color color) {
@@ -314,7 +312,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void ellipse(num x, num y, num w, num h) {
-    final rect = new Offset(x - w/2, y - h/2) & new Size(w, h);
+    final rect = new Offset(x - w / 2, y - h / 2) & new Size(w, h);
     if (useFill) {
       paintCanvas.drawOval(rect, fillPaint);
     }
@@ -346,7 +344,8 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void rect(num x, num y, num w, num h) {
-    final rect = new Offset(x.toDouble(), y.toDouble()) & new Size(w.toDouble(), h.toDouble());
+    final rect = new Offset(x.toDouble(), y.toDouble()) &
+        new Size(w.toDouble(), h.toDouble());
     if (useFill) {
       paintCanvas.drawRect(rect, fillPaint);
     }
@@ -376,7 +375,10 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     if (0 < vertices.length) {
       if (shapeMode == PConstants.POINTS || shapeMode == PConstants.LINES) {
         var vlist = List<double>();
-        for (var v in vertices) { vlist.add(v.dx); vlist.add(v.dy); }
+        for (var v in vertices) {
+          vlist.add(v.dx);
+          vlist.add(v.dy);
+        }
         var raw = Float32List.fromList(vlist);
         if (shapeMode == PConstants.POINTS) {
           paintCanvas.drawRawPoints(PointMode.points, raw, strokePaint);
@@ -424,21 +426,9 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     paintCanvas.restore();
   }
 
-  void mousePressed() { }
+  void mousePressed() {}
 
-  void mouseDragged() { }
+  void mouseDragged() {}
 
-  void mouseReleased() { }
-}
-
-class PVector {
-  double x = 0.0;
-  double y = 0.0;
-  double z = 0.0;
-
-  PVector(double x, double y, [double z = 0.0]) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+  void mouseReleased() {}
 }

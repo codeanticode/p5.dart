@@ -284,6 +284,38 @@ class PVector {
     return copy();
   }
 
+  /**
+   * ( begin auto-generated from PVector_dist.xml )
+   *
+   * Calculates the Euclidean distance between two points (considering a
+   * point as a vector object).
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @param v the x, y, and z coordinates of a PVector
+   * @brief Calculate the distance between two points
+   */
+  double dist(PVector v) {
+    double dx = x - v.x;
+    double dy = y - v.y;
+    double dz = z - v.z;
+    return math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+
+  /**
+   * @param v1 any variable of type PVector
+   * @param v2 any variable of type PVector
+   * @return the Euclidean distance between v1 and v2
+   */
+  static double dist2(PVector v1, PVector v2) {
+    double dx = v1.x - v2.x;
+    double dy = v1.y - v2.y;
+    double dz = v1.z - v2.z;
+    return math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+
   PVector operator -(PVector other) {
     return sub2(
       this,

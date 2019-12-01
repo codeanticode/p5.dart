@@ -7,6 +7,10 @@ class PVector {
   double y = 0.0;
   double z = 0.0;
 
+  static PVector zero() {
+    return PVector(0, 0, 0);
+  }
+
   PVector(double x, double y, [double z = 0.0]) {
     this.x = x;
     this.y = y;
@@ -78,6 +82,28 @@ class PVector {
     y += v.y;
     z += v.z;
     return this;
+  }
+
+  /**
+   * Add two vectors
+   * @param v1 a vector
+   * @param v2 another vector
+   */
+  static PVector add2(PVector v1, PVector v2) {
+    return add3(v1, v2, null);
+  }
+
+  /**
+   * Add two vectors into a target vector
+   * @param target the target vector (if null, a new vector will be created)
+   */
+  static PVector add3(PVector v1, PVector v2, PVector target) {
+    if (target == null) {
+      target = new PVector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    } else {
+      target.set(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+    return target;
   }
 
   /**
@@ -236,5 +262,41 @@ class PVector {
    */
   static PVector div2(PVector v, double n) {
     return div3(v, n, null);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_copy.xml )
+   *
+   * Gets a copy of the vector, returns a PVector object.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Get a copy of the vector
+   */
+  PVector copy() {
+    return new PVector(x, y, z);
+  }
+
+  ///  @Deprecated use copy
+  PVector get() {
+    return copy();
+  }
+
+  PVector operator -(PVector other) {
+    return sub2(
+      this,
+      other,
+    );
+    // return Family([this, other]);
+  }
+
+  PVector operator +(PVector other) {
+    return add2(
+      this,
+      other,
+    );
+    // return Family([this, other]);
   }
 }

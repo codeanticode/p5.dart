@@ -5,6 +5,7 @@ import 'package:flutter/semantics.dart';
 import "dart:math" as math;
 import "dart:ui";
 import "dart:typed_data";
+// import 'PApplet.dart';
 
 class PWidget extends StatelessWidget {
   PPainter painter;
@@ -422,7 +423,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     return (angle / math.pi) * 180;
   }
 
-  math.Random internalRandom;
+  /* math.Random internalRandom;
 
   /**
    *
@@ -482,7 +483,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
       value = random(diff) + low;
     } while (value == high);
     return value;
-  }
+  } */
 
   void pop() {
     paintCanvas.restore();

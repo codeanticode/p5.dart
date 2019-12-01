@@ -70,6 +70,14 @@ abstract class PApplet {
     return value;
   }
 
+  num radians(num angle) {
+    return (angle / 180) * math.pi;
+  }
+
+  num degrees(num angle) {
+    return (angle / math.pi) * 180;
+  }
+
   /**
    * @nowebref
    */

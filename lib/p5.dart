@@ -432,13 +432,13 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     paintCanvas.save();
   }
 
-  num radians(num angle) {
+  /* num radians(num angle) {
     return (angle / 180) * math.pi;
   }
 
   num degrees(num angle) {
     return (angle / math.pi) * 180;
-  }
+  } */
 
   /* math.Random internalRandom;
 

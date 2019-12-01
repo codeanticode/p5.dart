@@ -1,5 +1,7 @@
 library p_vector;
 
+import 'dart:math' as math;
+
 class PVector {
   double x = 0.0;
   double y = 0.0;
@@ -53,6 +55,144 @@ class PVector {
    */
   static PVector sub2(PVector v1, PVector v2) {
     return sub3(v1, v2, null);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_add.xml )
+   *
+   * Adds x, y, and z components to a vector, adds one vector to another, or
+   * adds two independent vectors together. The version of the method that
+   * adds two vectors together is a static method and returns a PVector, the
+   * others have no return value -- they act directly on the vector. See the
+   * examples for more context.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @param v the vector to be added
+   * @brief Adds x, y, and z components to a vector, one vector to another, or two independent vectors
+   */
+  PVector add(PVector v) {
+    x += v.x;
+    y += v.y;
+    z += v.z;
+    return this;
+  }
+
+  /**
+   * ( begin auto-generated from PVector_mag.xml )
+   *
+   * Calculates the magnitude (length) of the vector and returns the result
+   * as a float (this is simply the equation <em>sqrt(x*x + y*y + z*z)</em>.)
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Calculate the magnitude of the vector
+   * @return magnitude (length) of the vector
+   * @see PVector#magSq()
+   */
+  double mag() {
+    return math.sqrt(x * x + y * y + z * z);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_normalize.xml )
+   *
+   * Normalize the vector to length 1 (make it a unit vector).
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Normalize the vector to a length of 1
+   */
+  PVector normalize() {
+    double m = mag();
+    if (m != 0 && m != 1) {
+      div(m);
+    }
+    return this;
+  }
+
+  /**
+   * ( begin auto-generated from PVector_mag.xml )
+   *
+   * Calculates the squared magnitude of the vector and returns the result
+   * as a float (this is simply the equation <em>(x*x + y*y + z*z)</em>.)
+   * Faster if the real length is not required in the
+   * case of comparing vectors, etc.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Calculate the magnitude of the vector, squared
+   * @return squared magnitude of the vector
+   * @see PVector#mag()
+   */
+  double magSq() {
+    return (x * x + y * y + z * z);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_limit.xml )
+   *
+   * Limit the magnitude of this vector to the value used for the <b>max</b> parameter.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @param max the maximum magnitude for the vector
+   * @brief Limit the magnitude of the vector
+   */
+  PVector limit(double max) {
+    if (magSq() > max * max) {
+      normalize();
+      mult(max);
+    }
+    return this;
+  }
+
+  /**
+   * ( begin auto-generated from PVector_mult.xml )
+   *
+   * Multiplies a vector by a scalar or multiplies one vector by another.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Multiply a vector by a scalar
+   * @param n the number to multiply with the vector
+   */
+  PVector mult(double n) {
+    x *= n;
+    y *= n;
+    z *= n;
+    return this;
+  }
+
+  /**
+   * ( begin auto-generated from PVector_div.xml )
+   *
+   * Divides a vector by a scalar or divides one vector by another.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Divide a vector by a scalar
+   * @param n the number by which to divide the vector
+   */
+  PVector div(double n) {
+    x /= n;
+    y /= n;
+    z /= n;
+    return this;
   }
 
   /**

@@ -2,7 +2,7 @@ library p5;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
-import "dart:math";
+import "dart:math" as math;
 import "dart:ui";
 import "dart:typed_data";
 
@@ -415,16 +415,46 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   num radians(num angle) {
-    return (angle / 180) * pi;
+    return (angle / 180) * math.pi;
   }
 
   num degrees(num angle) {
-    return (angle / pi) * 180;
+    return (angle / math.pi) * 180;
+  }
+
+  math.Random internalRandom;
+
+  /**
+   *
+   */
+  double random(double high) {
+    // avoid an infinite loop when 0 or NaN are passed in
+    if (high == 0 || high != high) {
+      return 0;
+    }
+
+    if (internalRandom == null) {
+      internalRandom = math.Random();
+    }
+
+    // for some reason (rounding error?) Math.random() * 3
+    // can sometimes return '3' (once in ~30 million tries)
+    // so a check was added to avoid the inclusion of 'howbig'
+    double value = 0;
+    do {
+      value = internalRandom.nextDouble() * high;
+    } while (value == high);
+    return value;
   }
 
   void pop() {
     paintCanvas.restore();
   }
+
+  /* double random(double high) {
+        return math.Random()
+
+    } */
 
   void mousePressed() {}
 

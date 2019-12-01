@@ -69,4 +69,11 @@ abstract class PApplet {
     } while (value == high);
     return value;
   }
+
+  /**
+   * @nowebref
+   */
+  /* public void smooth() {
+    smooth(1);
+  } */
 }

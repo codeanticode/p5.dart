@@ -271,6 +271,18 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     useStroke = true;
   }
 
+  /**
+   * @param alpha opacity of the stroke
+   */
+  void stroke2(Color color, int alpha) {
+    /*  if (recorder != null) recorder.stroke(rgb, alpha);
+    g.stroke(rgb, alpha); */
+    // color.alpha = alpha;
+    color.withAlpha(alpha);
+    strokePaint.color = color.withAlpha(alpha);
+    useStroke = true;
+  }
+
   void strokeWeight(num weight) {
     strokePaint.strokeWidth = weight.toDouble();
   }
@@ -305,6 +317,11 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void fill(Color color) {
     fillPaint.color = color;
+    useFill = true;
+  }
+
+  void fill2(Color color, int alpha) {
+    fillPaint.color = color.withAlpha(alpha);
     useFill = true;
   }
 

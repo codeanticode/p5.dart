@@ -215,4 +215,26 @@ class PVector {
     this.z = z;
     return this;
   }
+
+  /**
+   * Divide a vector by a scalar and store the result in another vector.
+   * @param target PVector in which to store the result
+   */
+  static PVector div3(PVector v, double n, PVector target) {
+    if (target == null) {
+      target = new PVector(v.x / n, v.y / n, v.z / n);
+    } else {
+      target.set(v.x / n, v.y / n, v.z / n);
+    }
+    return target;
+  }
+
+  /**
+   * Divide a vector by a scalar and return the result in a new vector.
+   * @param v the vector to divide by the scalar
+   * @return a new vector that is v1 / n
+   */
+  static PVector div2(PVector v, double n) {
+    return div3(v, n, null);
+  }
 }

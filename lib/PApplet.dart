@@ -78,6 +78,27 @@ abstract class PApplet {
     return (angle / math.pi) * 180;
   }
 
+  static double map(
+      double value, double start1, double stop1, double start2, double stop2) {
+    double outgoing =
+        start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+    String badness = null;
+    if (outgoing != outgoing) {
+      badness = "NaN (not a number)";
+    } else if (outgoing == double.negativeInfinity ||
+        outgoing == double.infinity) {
+      badness = "infinity";
+    }
+    if (badness != null) {
+      /*   final String msg =
+        String.format("map(%s, %s, %s, %s, %s) called, which returns %s",
+                      nf(value), nf(start1), nf(stop1),
+                      nf(start2), nf(stop2), badness);
+      PGraphics.showWarning(msg); */
+    }
+    return outgoing;
+  }
+
   /**
    * @nowebref
    */

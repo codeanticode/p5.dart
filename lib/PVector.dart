@@ -2,6 +2,9 @@ library p_vector;
 
 import 'dart:math' as math;
 
+import 'PApplet.dart';
+import 'PConstants.dart';
+
 class PVector {
   double x = 0.0;
   double y = 0.0;
@@ -314,6 +317,94 @@ class PVector {
     double dy = v1.y - v2.y;
     double dz = v1.z - v2.z;
     return math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_setMag.xml )
+   *
+   * Set the magnitude of this vector to the value used for the <b>len</b> parameter.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @param len the new length for this vector
+   * @brief Set the magnitude of the vector
+   */
+  PVector setMag(double len) {
+    normalize();
+    mult(len);
+    return this;
+  }
+
+  /**
+   * ( begin auto-generated from PVector_random2D.xml )
+   *
+   * Make a new 2D unit vector with a random direction.  If you pass in "this"
+   * as an argument, it will use the PApplet's random number generator.  You can
+   * also pass in a target PVector to fill.
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @return the random PVector
+   * @brief Make a new 2D unit vector with a random direction.
+   * @see PVector#random3D()
+   */
+  static PVector random2D() {
+    return random2D_v3(null, null);
+  }
+
+  /**
+   * Set a 2D vector to a random unit vector with a random direction
+   * @param target the target vector (if null, a new vector will be created)
+   * @return the random PVector
+   */
+  static PVector random2D_v2(PVector target) {
+    return random2D_v3(target, null);
+  }
+
+  /**
+   * Make a new 2D unit vector with a random direction. Pass in the parent
+   * PApplet if you want randomSeed() to work (and be predictable). Or leave
+   * it null and be... random.
+   * @return the random PVector
+   */
+  static PVector random2D_v3(PVector target, PApplet parent) {
+    return (parent == null)
+        ? fromAngle_v2(math.Random().nextDouble() * math.pi * 2, target)
+        : fromAngle_v2(parent.random(PConstants.TAU), target);
+  }
+
+  /**
+   * ( begin auto-generated from PVector_sub.xml )
+   *
+   * Make a new 2D unit vector from an angle.
+   *
+   * ( end auto-generated )
+   *
+   * @webref pvector:method
+   * @usage web_application
+   * @brief Make a new 2D unit vector from an angle
+   * @param angle the angle in radians
+   * @return the new unit PVector
+   */
+  static PVector fromAngle(double angle) {
+    return fromAngle_v2(angle, null);
+  }
+
+  /**
+   * Make a new 2D unit vector from an angle
+   *
+   * @param target the target vector (if null, a new vector will be created)
+   * @return the PVector
+   */
+  static PVector fromAngle_v2(double angle, PVector target) {
+    if (target == null) {
+      target = new PVector(math.cos(angle), math.sin(angle));
+    } else {
+      target.set(math.cos(angle), math.sin(angle), 0);
+    }
+    return target;
   }
 
   PVector operator -(PVector other) {

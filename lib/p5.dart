@@ -5,6 +5,8 @@ import 'package:flutter/semantics.dart';
 import "dart:math" as math;
 import "dart:ui";
 import "dart:typed_data";
+
+import 'PConstants.dart';
 // import 'PApplet.dart';
 
 class PWidget extends StatelessWidget {
@@ -81,22 +83,6 @@ class PAnimator extends AnimationController {
   void run() {
     forward();
   }
-}
-
-class PConstants {
-  static int OPEN = 0;
-  static int CLOSE = 1;
-
-  static int LINES = 1;
-  static int POINTS = 2;
-  static int POLYGON = 3;
-
-  static final int SQUARE = 1 << 0; // called 'butt' in the svg spec
-  static final int ROUND = 1 << 1;
-  static final int PROJECT = 1 << 2; // called 'square' in the svg spec
-
-  static final int MITER = 1 << 3;
-  static final int BEVEL = 1 << 5;
 }
 
 class PPainter extends ChangeNotifier implements CustomPainter {
@@ -339,7 +325,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     }
   }
 
-  void line(num x1, num y1, num x2, num y2) {
+  void line(double x1, double y1, double x2, double y2) {
     if (useStroke) {
       paintCanvas.drawLine(new Offset(x1, y1), new Offset(x2, y2), strokePaint);
     }
@@ -361,9 +347,8 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     endShape(PConstants.CLOSE);
   }
 
-  void rect(num x, num y, num w, num h) {
-    final rect = new Offset(x.toDouble(), y.toDouble()) &
-        new Size(w.toDouble(), h.toDouble());
+  void rect(double x, double y, double w, double h) {
+    final rect = new Offset(x, y) & new Size(w, h);
     if (useFill) {
       paintCanvas.drawRect(rect, fillPaint);
     }

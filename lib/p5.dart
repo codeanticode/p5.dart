@@ -1,18 +1,18 @@
 library p5;
 
+import "dart:typed_data";
+import "dart:ui";
+
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
-import "dart:math" as math;
-import "dart:ui";
-import "dart:typed_data";
 
 import 'PConstants.dart';
 // import 'PApplet.dart';
 
 class PWidget extends StatelessWidget {
-  PPainter painter;
+  PPainter? painter;
 
-  PWidget(PPainter p) {
+  PWidget(PPainter? p) {
     painter = p;
   }
 
@@ -22,9 +22,10 @@ class PWidget extends StatelessWidget {
 
 //    print(painter);
     return new Container(
-      width: painter.fillParent ? null : painter.width.toDouble(),
-      height: painter.fillParent ? null : painter.height.toDouble(),
-      constraints: painter.fillParent ? BoxConstraints.expand() : null, //new
+      width: painter!.fillParent ? null : painter!.width.toDouble(),
+      height: painter!.fillParent ? null : painter!.height.toDouble(),
+      constraints: painter!.fillParent ? BoxConstraints.expand() : null,
+      //new
       margin: const EdgeInsets.all(0.0),
       child: new ClipRect(
           child: new CustomPaint(
@@ -35,16 +36,16 @@ class PWidget extends StatelessWidget {
           // transforms global positions into local positions relative
           // to the widget.
           onTapDown: (details) {
-            painter.onTapDown(context, details);
+            painter!.onTapDown(context, details);
           },
           onPanStart: (details) {
-            painter.onDragStart(context, details);
+            painter!.onDragStart(context, details);
           },
           onPanUpdate: (details) {
-            painter.onDragUpdate(context, details);
+            painter!.onDragUpdate(context, details);
           },
           onTapUp: (details) {
-            painter.onTapUp(context, details);
+            painter!.onTapUp(context, details);
           },
 //              onTapCancel: (details) {
 //
@@ -53,7 +54,7 @@ class PWidget extends StatelessWidget {
 //
 //              },
           onPanEnd: (details) {
-            painter.onDragEnd(context, details);
+            painter!.onDragEnd(context, details);
           },
         ),
       )),
@@ -89,9 +90,9 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   bool fillParent = false;
   int width = 100;
   int height = 100;
-  Canvas paintCanvas;
-  Size paintSize;
-  Rect canvasRect;
+  late Canvas paintCanvas;
+  late Size paintSize;
+  late Rect canvasRect;
 
   int frameCount = 0;
 
@@ -106,7 +107,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   bool useFill = true;
   bool useStroke = true;
 
-  var vertices = List<Offset>();
+  var vertices = <Offset>[];
   Path path = new Path();
   var shapeMode = PConstants.POLYGON;
 
@@ -116,7 +117,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     redraw();
   }
 
-  bool hitTest(Offset position) => null;
+  bool? hitTest(Offset position) => null;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -182,7 +183,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void onTapDown(BuildContext context, TapDownDetails details) {
 //    print("onTapDown");
-    final RenderBox box = context.findRenderObject();
+    final RenderBox box = context.findRenderObject() as RenderBox;
     final Offset offset = box.globalToLocal(details.globalPosition);
     updatePointer(offset);
     mousePressed();
@@ -191,7 +192,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void onTapUp(BuildContext context, TapUpDetails details) {
 //    print("onTapUp");
-    final RenderBox box = context.findRenderObject();
+    final RenderBox box = context.findRenderObject() as RenderBox;
     final Offset offset = box.globalToLocal(details.globalPosition);
     updatePointer(offset);
     mouseReleased();
@@ -200,7 +201,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void onDragStart(BuildContext context, DragStartDetails details) {
 //    print("onDragStart");
-    final RenderBox box = context.findRenderObject();
+    final RenderBox box = context.findRenderObject() as RenderBox;
     final Offset offset = box.globalToLocal(details.globalPosition);
     updatePointer(offset);
     mousePressed();
@@ -209,7 +210,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void onDragUpdate(BuildContext context, DragUpdateDetails details) {
 //    print("onDragUpdate");
-    final RenderBox box = context.findRenderObject();
+    final RenderBox box = context.findRenderObject() as RenderBox;
     final Offset offset = box.globalToLocal(details.globalPosition);
     updatePointer(offset);
     mouseDragged();
@@ -244,7 +245,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   Color color(num r, num g, num b, [num a = 255]) {
-    return Color.fromRGBO(r, g, b, a / 255);
+    return Color.fromRGBO(r as int, g as int, b as int, a / 255);
   }
 
   void background(Color color) {
@@ -257,9 +258,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     useStroke = true;
   }
 
-  /**
-   * @param alpha opacity of the stroke
-   */
+  /// @param alpha opacity of the stroke
   void stroke2(Color color, int alpha) {
     /*  if (recorder != null) recorder.stroke(rgb, alpha);
     g.stroke(rgb, alpha); */
@@ -285,7 +284,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     }
   }
 
-  void strokeJoin(StrokeJoin join) {
+  void strokeJoin(int join) {
     if (join == PConstants.BEVEL) {
       strokePaint.strokeJoin = StrokeJoin.bevel;
     }
@@ -333,7 +332,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void point(num x, num y) {
     if (useStroke) {
-      var points = [new Offset(x, y)];
+      var points = [new Offset(x as double, y as double)];
       paintCanvas.drawPoints(PointMode.points, points, strokePaint);
     }
   }
@@ -377,7 +376,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   void endShape([int mode = 0]) {
     if (0 < vertices.length) {
       if (shapeMode == PConstants.POINTS || shapeMode == PConstants.LINES) {
-        var vlist = List<double>();
+        var vlist = <double>[];
         for (var v in vertices) {
           vlist.add(v.dx);
           vlist.add(v.dy);

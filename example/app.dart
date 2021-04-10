@@ -6,8 +6,8 @@ import "sketch.dart";
 void main() => runApp(new MyApp());
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
   @override
   _MyHomePageState createState() {
     return new _MyHomePageState();
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-  MySketch sketch;
-  PAnimator animator;
+  MySketch? sketch;
+  late PAnimator animator;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     animator = new PAnimator(this);
     animator.addListener(() {
       setState(() {
-        sketch.redraw();
+        sketch!.redraw();
       });
     });
     animator.run();

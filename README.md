@@ -129,10 +129,8 @@ class MySketch extends PPainter {
 }
 ```
 
-Notice that the size of the drawing area can be made to fill the entire app by using fullScreen(). The app should give similar results for both iOS and Android:
+Notice that the size of the drawing area can be made to fill the entire app by using fullScreen(). The app should give similar results for both iOS and Android.
 
-![P5 drawing sketch running in iPhone 6S and Nexus 5X](http://processing.andrescolubri.net/libraries/p5.dart/p5dart.jpg)
+For help getting started with Flutter, view our online [documentation](https://docs.flutter.dev/).
 
-For help getting started with Flutter, view our online [documentation](https://flutter.io/).
-
-For help on editing package code, view the [documentation](https://flutter.io/developing-packages/).
+For help on editing package code, view the [documentation](https://docs.flutter.dev/development/packages-and-plugins/developing-packages).

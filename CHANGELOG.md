@@ -1,3 +1,11 @@
+## [0.1.0] - January 22, 2022.
+
+* Merged several API additions from contributors.
+
+## [0.0.5] - November 16, 2019
+
+* Minor documentation fixes.
+
 ## [0.0.4] - July 24, 2018.
 
 * Correctly implemented polygon rendering using Path.drawPolygon()

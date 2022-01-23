@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   MySketch? sketch;
   late PAnimator animator;
 
@@ -54,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       appBar: new AppBar(title: new Text("P5 Draw!")),
       backgroundColor: const Color.fromRGBO(200, 200, 200, 1.0),
       body: new Center(
-        child:new PWidget(sketch),
+        child: new PWidget(sketch),
       ),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import "package:p5/p5.dart";
 import "sketch.dart";
 
-void main() => runApp(new MyApp());
+void main() {
+  runApp(new MyApp());
+}
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);

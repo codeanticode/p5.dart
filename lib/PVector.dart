@@ -80,6 +80,13 @@ class PVector {
     return this;
   }
 
+  PVector flip(PVector v){
+    x = -v.x;
+    y = -v.y;
+    z = -v.z;
+    return this;
+  }
+
   /// Add two vectors
   /// @param v1 a vector
   /// @param v2 another vector

@@ -80,14 +80,6 @@ class PVector {
     return this;
   }
 
-  // flip any given Vector by 180 degrees 
-  // @param v is a vector
-  PVector flip(PVector v){
-    x = -v.x;
-    y = -v.y;
-    z = -v.z;
-    return this;
-  }
 
   /// Add two vectors
   /// @param v1 a vector
@@ -106,6 +98,16 @@ class PVector {
     }
     return target;
   }
+
+    // flip any given Vector by 180 degrees 
+  // @param v is a vector
+  PVector flip(PVector v){
+    x = -v.x;
+    y = -v.y;
+    z = -v.z;
+    return this;
+  }
+
 
   /// ( begin auto-generated from PVector_mag.xml )
   ///
@@ -191,6 +193,13 @@ class PVector {
     y *= n;
     z *= n;
     return this;
+  }
+
+  // find out the dot product of two vectors
+  // @param v1 is a vector
+  // @param v2 is another vector
+  static double dot(PVector v1, PVector v2){
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
   }
 
   /// ( begin auto-generated from PVector_div.xml )

@@ -80,6 +80,8 @@ class PVector {
     return this;
   }
 
+  // flip any given Vector by 180 degrees 
+  // @param v is a vector
   PVector flip(PVector v){
     x = -v.x;
     y = -v.y;

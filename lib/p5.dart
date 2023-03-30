@@ -314,6 +314,16 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     useFill = false;
   }
 
+  void circle(double x, double y, double radius) {
+    final rect = Offset(x - radius / 2, y - radius / 2) & Size(radius, radius);
+    if (useFill) {
+      paintCanvas.drawOval(rect, fillPaint);
+    }
+    if (useStroke) {
+      paintCanvas.drawOval(rect, strokePaint);
+    }
+  }
+
   void ellipse(double x, double y, double w, double h) {
     final rect = new Offset(x - w / 2, y - h / 2) & new Size(w, h);
     if (useFill) {

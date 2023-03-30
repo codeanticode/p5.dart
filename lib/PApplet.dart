@@ -16,9 +16,7 @@ abstract class PApplet {
       return 0;
     }
 
-    if (internalRandom == null) {
-      internalRandom = math.Random();
-    }
+    internalRandom ??= math.Random();
 
     // for some reason (rounding error?) Math.random() * 3
     // can sometimes return '3' (once in ~30 million tries)

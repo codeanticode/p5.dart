@@ -14,17 +14,13 @@ class PVector {
     return PVector(0, 0, 0);
   }
 
-  PVector(double x, double y, [double z = 0.0]) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+  PVector(this.x, this.y, [this.z = 0.0]);
 
   /// Subtract one vector from another and store in another vector
   /// @param target PVector in which to store the result
   static PVector? sub3(PVector v1, PVector v2, PVector? target) {
     if (target == null) {
-      target = new PVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+      target = PVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     } else {
       target.set(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     }
@@ -91,7 +87,7 @@ class PVector {
   /// @param target the target vector (if null, a new vector will be created)
   static PVector add3(PVector v1, PVector v2, PVector? target) {
     if (target == null) {
-      target = new PVector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+      target = PVector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     } else {
       target.set(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
@@ -224,7 +220,7 @@ class PVector {
   /// @param target PVector in which to store the result
   static PVector? div3(PVector v, double n, PVector? target) {
     if (target == null) {
-      target = new PVector(v.x / n, v.y / n, v.z / n);
+      target = PVector(v.x / n, v.y / n, v.z / n);
     } else {
       target.set(v.x / n, v.y / n, v.z / n);
     }
@@ -248,7 +244,7 @@ class PVector {
   /// @usage web_application
   /// @brief Get a copy of the vector
   PVector copy() {
-    return new PVector(x, y, z);
+    return PVector(x, y, z);
   }
 
   ///  @Deprecated use copy
@@ -353,7 +349,7 @@ class PVector {
   /// @return the PVector
   static PVector fromAngle_v2(double angle, PVector? target) {
     if (target == null) {
-      target = new PVector(math.cos(angle), math.sin(angle));
+      target = PVector(math.cos(angle), math.sin(angle));
     } else {
       target.set(math.cos(angle), math.sin(angle), 0);
     }

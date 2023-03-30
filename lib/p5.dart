@@ -21,16 +21,16 @@ class PWidget extends StatelessWidget {
 //    print("BUILDING WIDGET...");
 
 //    print(painter);
-    return new Container(
+    return Container(
       width: painter!.fillParent ? null : painter!.width.toDouble(),
       height: painter!.fillParent ? null : painter!.height.toDouble(),
-      constraints: painter!.fillParent ? BoxConstraints.expand() : null,
+      constraints: painter!.fillParent ? const BoxConstraints.expand() : null,
       //new
       margin: const EdgeInsets.all(0.0),
-      child: new ClipRect(
-          child: new CustomPaint(
+      child: ClipRect(
+          child: CustomPaint(
         painter: painter,
-        child: new GestureDetector(
+        child: GestureDetector(
           // The gesture detector needs to be declared here so it can
           // access the context from the CustomPaint, which allows to
           // transforms global positions into local positions relative
@@ -108,7 +108,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   bool useStroke = true;
 
   var vertices = <Offset>[];
-  Path path = new Path();
+  Path path = Path();
   var shapeMode = PConstants.POLYGON;
 
   PPainter() {
@@ -117,6 +117,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     redraw();
   }
 
+  @override
   bool? hitTest(Offset position) => null;
 
   @override
@@ -136,9 +137,9 @@ class PPainter extends ChangeNotifier implements CustomPainter {
       var rect = Offset.zero & size;
       rect = const Alignment(0.0, 0.0).inscribe(size, rect);
       return [
-        new CustomPainterSemantics(
+        CustomPainterSemantics(
           rect: rect,
-          properties: new SemanticsProperties(
+          properties: const SemanticsProperties(
             label: 'P5 Sketch',
             textDirection: TextDirection.ltr,
           ),
@@ -315,7 +316,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void ellipse(double x, double y, double w, double h) {
-    final rect = new Offset(x - w / 2, y - h / 2) & new Size(w, h);
+    final rect = Offset(x - w / 2, y - h / 2) & Size(w, h);
     if (useFill) {
       paintCanvas.drawOval(rect, fillPaint);
     }
@@ -326,13 +327,13 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void line(double x1, double y1, double x2, double y2) {
     if (useStroke) {
-      paintCanvas.drawLine(new Offset(x1, y1), new Offset(x2, y2), strokePaint);
+      paintCanvas.drawLine(Offset(x1, y1), Offset(x2, y2), strokePaint);
     }
   }
 
   void point(num x, num y) {
     if (useStroke) {
-      var points = [new Offset(x as double, y as double)];
+      var points = [Offset(x as double, y as double)];
       paintCanvas.drawPoints(PointMode.points, points, strokePaint);
     }
   }
@@ -347,7 +348,7 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void rect(double x, double y, double w, double h) {
-    final rect = new Offset(x, y) & new Size(w, h);
+    final rect = Offset(x, y) & Size(w, h);
     if (useFill) {
       paintCanvas.drawRect(rect, fillPaint);
     }
@@ -374,28 +375,26 @@ class PPainter extends ChangeNotifier implements CustomPainter {
   }
 
   void endShape([int mode = 0]) {
-    if (0 < vertices.length) {
-      if (shapeMode == PConstants.POINTS || shapeMode == PConstants.LINES) {
-        var vlist = <double>[];
-        for (var v in vertices) {
-          vlist.add(v.dx);
-          vlist.add(v.dy);
-        }
-        var raw = Float32List.fromList(vlist);
-        if (shapeMode == PConstants.POINTS) {
-          paintCanvas.drawRawPoints(PointMode.points, raw, strokePaint);
-        } else {
-          paintCanvas.drawRawPoints(PointMode.lines, raw, strokePaint);
-        }
+    if (shapeMode == PConstants.POINTS || shapeMode == PConstants.LINES) {
+      var vlist = <double>[];
+      for (var v in vertices) {
+        vlist.add(v.dx);
+        vlist.add(v.dy);
+      }
+      var raw = Float32List.fromList(vlist);
+      if (shapeMode == PConstants.POINTS) {
+        paintCanvas.drawRawPoints(PointMode.points, raw, strokePaint);
       } else {
-        path.reset();
-        path.addPolygon(vertices, mode == PConstants.CLOSE);
-        if (useFill) {
-          paintCanvas.drawPath(path, fillPaint);
-        }
-        if (useStroke) {
-          paintCanvas.drawPath(path, strokePaint);
-        }
+        paintCanvas.drawRawPoints(PointMode.lines, raw, strokePaint);
+      }
+    } else {
+      path.reset();
+      path.addPolygon(vertices, mode == PConstants.CLOSE);
+      if (useFill) {
+        paintCanvas.drawPath(path, fillPaint);
+      }
+      if (useStroke) {
+        paintCanvas.drawPath(path, strokePaint);
       }
     }
   }

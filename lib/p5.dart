@@ -2,7 +2,7 @@ library p5;
 
 import "dart:typed_data";
 import "dart:ui";
-
+import 'dart:math' show pi, sin, cos;
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
@@ -312,6 +312,35 @@ class PPainter extends ChangeNotifier implements CustomPainter {
 
   void noFill() {
     useFill = false;
+  }
+
+  void polygon(double x, double y, double radius, int sides) {
+    final path = Path();
+
+    final center = Offset(x, y);
+    final angle = (2 * pi) / sides;
+
+    final angles = List.generate(sides, (index) => index * angle);
+
+    path.moveTo(
+      center.dx + radius * cos(0),
+      center.dy + radius * sin(0),
+    );
+
+    for (final angle in angles) {
+      path.lineTo(
+        center.dx + radius * cos(angle),
+        center.dy + radius * sin(angle),
+      );
+    }
+
+    path.close();
+    if (useFill) {
+      paintCanvas.drawPath(path, fillPaint);
+    }
+    if (useStroke) {
+      paintCanvas.drawPath(path, strokePaint);
+    }
   }
 
   void ellipse(double x, double y, double w, double h) {

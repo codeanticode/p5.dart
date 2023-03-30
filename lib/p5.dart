@@ -314,6 +314,26 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     useFill = false;
   }
 
+  void arc(double x, double y, double w, double h, double start, double stop,
+      [String mode = "PIE"]) {
+    if (useFill) {
+      paintCanvas.drawArc(
+          Offset(x, y) & Size(w, h),
+          start, //radians
+          stop, //radians
+          mode == "CHORD" ? false : true,
+          fillPaint);
+    }
+    if (useStroke) {
+      paintCanvas.drawArc(
+          Offset(x, y) & Size(w, h),
+          start, //radians
+          stop, //radians
+          mode == "CHORD" ? false : true,
+          strokePaint);
+    }
+  }
+
   void ellipse(double x, double y, double w, double h) {
     final rect = new Offset(x - w / 2, y - h / 2) & new Size(w, h);
     if (useFill) {

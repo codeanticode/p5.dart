@@ -337,6 +337,16 @@ class PPainter extends ChangeNotifier implements CustomPainter {
     }
   }
 
+  void square(double x, double y, double s) {
+    final rect = Offset(x, y) & Size(s, s);
+    if (useFill) {
+      paintCanvas.drawRect(rect, fillPaint);
+    }
+    if (useStroke) {
+      paintCanvas.drawRect(rect, strokePaint);
+    }
+  }
+
   void quad(num x1, num y1, num x2, num y2, num x3, num y3, num x4, num y4) {
     beginShape();
     vertex(x1, y1);

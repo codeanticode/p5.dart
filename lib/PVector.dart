@@ -24,7 +24,7 @@ class PVector {
   /// @param target PVector in which to store the result
   static PVector? sub3(PVector v1, PVector v2, PVector? target) {
     if (target == null) {
-      target = new PVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+      target = PVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     } else {
       target.set(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     }
@@ -88,10 +88,10 @@ class PVector {
   }
 
   /// Add two vectors into a target vector
-  /// @param target the target vector (if null, a new vector will be created)
+  /// @param target the target vector (if null, a  vector will be created)
   static PVector add3(PVector v1, PVector v2, PVector? target) {
     if (target == null) {
-      target = new PVector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+      target = PVector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     } else {
       target.set(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
@@ -224,16 +224,16 @@ class PVector {
   /// @param target PVector in which to store the result
   static PVector? div3(PVector v, double n, PVector? target) {
     if (target == null) {
-      target = new PVector(v.x / n, v.y / n, v.z / n);
+      target = PVector(v.x / n, v.y / n, v.z / n);
     } else {
       target.set(v.x / n, v.y / n, v.z / n);
     }
     return target;
   }
 
-  /// Divide a vector by a scalar and return the result in a new vector.
+  /// Divide a vector by a scalar and return the result in a  vector.
   /// @param v the vector to divide by the scalar
-  /// @return a new vector that is v1 / n
+  /// @return a  vector that is v1 / n
   static PVector? div2(PVector v, double n) {
     return div3(v, n, null);
   }
@@ -248,7 +248,7 @@ class PVector {
   /// @usage web_application
   /// @brief Get a copy of the vector
   PVector copy() {
-    return new PVector(x, y, z);
+    return PVector(x, y, z);
   }
 
   ///  @Deprecated use copy
@@ -292,7 +292,7 @@ class PVector {
   ///
   /// @webref pvector:method
   /// @usage web_application
-  /// @param len the new length for this vector
+  /// @param len the  length for this vector
   /// @brief Set the magnitude of the vector
   PVector setMag(double len) {
     normalize();
@@ -302,27 +302,27 @@ class PVector {
 
   /// ( begin auto-generated from PVector_random2D.xml )
   ///
-  /// Make a new 2D unit vector with a random direction.  If you pass in "this"
+  /// Make a  2D unit vector with a random direction.  If you pass in "this"
   /// as an argument, it will use the PApplet's random number generator.  You can
   /// also pass in a target PVector to fill.
   ///
   /// @webref pvector:method
   /// @usage web_application
   /// @return the random PVector
-  /// @brief Make a new 2D unit vector with a random direction.
+  /// @brief Make a  2D unit vector with a random direction.
   /// @see PVector#random3D()
   static PVector random2D() {
     return random2D_v3(null, null);
   }
 
   /// Set a 2D vector to a random unit vector with a random direction
-  /// @param target the target vector (if null, a new vector will be created)
+  /// @param target the target vector (if null, a  vector will be created)
   /// @return the random PVector
   static PVector random2D_v2(PVector target) {
     return random2D_v3(target, null);
   }
 
-  /// Make a new 2D unit vector with a random direction. Pass in the parent
+  /// Make a  2D unit vector with a random direction. Pass in the parent
   /// PApplet if you want randomSeed() to work (and be predictable). Or leave
   /// it null and be... random.
   /// @return the random PVector
@@ -334,26 +334,26 @@ class PVector {
 
   /// ( begin auto-generated from PVector_sub.xml )
   ///
-  /// Make a new 2D unit vector from an angle.
+  /// Make a  2D unit vector from an angle.
   ///
   /// ( end auto-generated )
   ///
   /// @webref pvector:method
   /// @usage web_application
-  /// @brief Make a new 2D unit vector from an angle
+  /// @brief Make a  2D unit vector from an angle
   /// @param angle the angle in radians
-  /// @return the new unit PVector
+  /// @return the  unit PVector
   static PVector fromAngle(double angle) {
     return fromAngle_v2(angle, null);
   }
 
-  /// Make a new 2D unit vector from an angle
+  /// Make a  2D unit vector from an angle
   ///
-  /// @param target the target vector (if null, a new vector will be created)
+  /// @param target the target vector (if null, a  vector will be created)
   /// @return the PVector
   static PVector fromAngle_v2(double angle, PVector? target) {
     if (target == null) {
-      target = new PVector(math.cos(angle), math.sin(angle));
+      target = PVector(math.cos(angle), math.sin(angle));
     } else {
       target.set(math.cos(angle), math.sin(angle), 0);
     }

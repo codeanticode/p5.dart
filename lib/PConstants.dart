@@ -30,6 +30,7 @@ class PConstants {
   /// @see PConstants#TAU
   /// @see PConstants#HALF_PI
   /// @see PConstants#QUARTER_PI
+  static const double PI = math.pi;
   static const double TWO_PI = 2.0 * math.pi;
 
   /// ( begin auto-generated from TAU.xml )

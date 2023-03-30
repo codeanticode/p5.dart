@@ -25,11 +25,11 @@ class MySketch extends PPainter {
   }
 
   void mousePressed() {
-    strokes.add([new PVector(mouseX, mouseY)]);
+    strokes.add([PVector(mouseX, mouseY)]);
   }
 
   void mouseDragged() {
     var stroke = strokes.last;
-    stroke.add(new PVector(mouseX, mouseY));
+    stroke.add(PVector(mouseX, mouseY));
   }
 }
